@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>UI Notes — Pages · Auth · Profile</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    :root {
+      --bg: #fff;
+      --muted: #6b7280;
+      --accent: #1f6feb;
+      --card: #f8fafc
+    }
+
+    body {
+      font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial;
+      line-height: 1.45;
+      margin: 0;
+      background: var(--card);
+      color: #0f1724
+    }
+
+    .wrap {
+      max-width: 900px;
+      margin: 28px auto;
+      padding: 28px;
+      background: var(--bg);
+      box-shadow: 0 6px 24px rgba(12, 18, 26, .06);
+      border-radius: 10px
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px
+    }
+
+    button {
+      background: #111827;
+      color: #fff;
+      border: 0;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer
+    }
+
+    button.secondary {
+      background: #eef2ff;
+      color: #1f2d5d
+    }
+
+    nav {
+      margin: 18px 0
+    }
+
+    nav a {
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 12px
+    }
+
+    section {
+      margin-top: 8px
+    }
+
+    details {
+      background: #fbfdff;
+      border: 1px solid #e6eefc;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 10px 0
+    }
+
+    summary {
+      font-weight: 600;
+      cursor: pointer
+    }
+
+    ul {
+      padding-left: 20px;
+      margin: 10px 0
+    }
+
+    li {
+      margin: 8px 0
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 14px
+    }
+
+    .small {
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .state {
+      font-weight: 600
+    }
+
+    .arrow {
+      padding: 0 8px;
+      color: #374151
+    }
+
+    code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px
+    }
+
+    @media (max-width:600px) {
+      .wrap {
+        margin: 8px;
+        padding: 16px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap" id="wrap">
+    <header>
+      <div>
+        <h1>Pages · Auth flows · Profile</h1>
+        <div class="small">Presenter-ready notes. Links open in a new tab.</div>
+      </div>
+      <div class="controls" aria-hidden="true">
+        <button class="secondary" id="increase">A+</button>
+        <button class="secondary" id="decrease">A-</button>
+      </div>
+    </header>
+
+    <section id="pages">
+      <details open>
+        <summary>Pages / Links</summary>
+        <ul>
+          <li><a href="http://localhost:5173/discover" target="_blank" rel="noopener noreferrer">Protected Route</a>
+            <span class="note">// Must be logged in</span></li>
+          <li><a href="http://localhost:5173/asdasda" target="_blank" rel="noopener noreferrer">Not Found</a></li>
+          <li><a href="http://localhost:5173/demo/unable" target="_blank" rel="noopener noreferrer">Unable to Load —
+              Generic</a>
+          </li>
+          <li><a href="http://localhost:5173/demo/unable/profile" target="_blank" rel="noopener noreferrer">Unable to
+              Load —
+              Concrete</a></li>
+          <li><a href="http://localhost:5173/demo/error" target="_blank" rel="noopener noreferrer">Error Boundary</a>
+          </li>
+        </ul>
+      </details>
+    </section>
+
+    <section id="auth">
+      <details>
+        <summary>Auth flows</summary>
+        <ul>
+          <li><span class="state">Login</span><span class="arrow">→</span><strong>Error</strong><span
+              class="arrow">:</span> wrong username or password</li>
+          <li><span class="state">Login</span><span class="arrow">→</span><strong>Success</strong><span
+              class="arrow">→</span>protected route accessible</li>
+          <li><span class="state">Register</span><span class="arrow">→</span><strong>Fail</strong><span
+              class="arrow">:</span> already exists — <code>test123</code> / <code>test123@gmail.com</code></li>
+          <li><span class="state">Register</span><span class="arrow">→</span><strong>Success</strong></li>
+          <li><span class="note">Auto logout</span><span class="arrow">→</span>change token expiration and test
+            auto-logout behavior</li>
+        </ul>
+      </details>
+    </section>
+
+    <section id="profile">
+      <details>
+        <summary>Profile</summary>
+        <ul>
+          <li><strong>Settings</strong><span class="arrow">→</span>change theme</li>
+          <li><strong>Profile page</strong><span class="arrow">→</span>view profile</li>
+          <li><strong>Edit profile</strong><span class="arrow">→</span>UI reacts to changes</li>
+        </ul>
+      </details>
+    </section>
+
+    <footer>
+      <div class="small">Tip: middle-click or Ctrl/Cmd+click links to force open in new tab if needed.</div>
+    </footer>
+  </div>
+
+  <script>
+    // ensure links open in a new tab
+    document.querySelectorAll('a[href]').forEach(a => {
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener noreferrer');
+    });
+
+    // A+ / A- font size controls
+    const wrap = document.getElementById('wrap');
+    const inc = document.getElementById('increase');
+    const dec = document.getElementById('decrease');
+    inc.addEventListener('click', () => {
+      const cur = parseFloat(getComputedStyle(wrap).fontSize) || 16;
+      wrap.style.fontSize = (cur + 2) + 'px';
+    });
+    dec.addEventListener('click', () => {
+      const cur = parseFloat(getComputedStyle(wrap).fontSize) || 16;
+      wrap.style.fontSize = Math.max(12, cur - 2) + 'px';
+    });
+  </script>
+</body>
+
+</html>
